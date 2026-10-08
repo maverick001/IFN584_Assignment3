@@ -1,0 +1,16 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/src/">
+    <Project Path="src/BoardGames.App/BoardGames.App.csproj" />
+    <Project Path="src/BoardGames.Core/BoardGames.Core.csproj" />
+    <Project Path="src/BoardGames.Gomoku/BoardGames.Gomoku.csproj" />
+    <Project Path="src/BoardGames.Reversi/BoardGames.Reversi.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/BoardGames.Tests/BoardGames.Tests.csproj" />
+  </Folder>
+</Solution>
