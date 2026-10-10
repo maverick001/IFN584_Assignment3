@@ -1,5 +1,6 @@
 using BoardGames.App;
 using BoardGames.Core;
+using BoardGames.Persistence;
 
 var catalog = CatalogSetup.Build();
 
@@ -7,6 +8,5 @@ var catalog = CatalogSetup.Build();
 if (args.Length > 0)
     return CliRunner.Run(args, catalog, Console.Out);
 
-// TODO B: pass `new JsonGameRepository()` as the third argument so save and load work.
-new MainMenu(catalog, new ConsoleGameIO()).Run();
+new MainMenu(catalog, new ConsoleGameIO(), new JsonGameRepository()).Run();
 return 0;

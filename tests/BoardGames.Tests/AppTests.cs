@@ -31,14 +31,15 @@ public class AppTests
 
         // Human vs Human
         Game hvh = factory.CreateGame(new GameSetup(GameMode.HvH, AiLevel.Dumb));
-        Assert.Equal(ExitReason.ScriptEnded, hvh.Play(ScriptedGameIO.FromCsv($"{code}1:1,{code}1:2")).Reason);
+        string opening = family == "reversi" ? "P3:4,P3:3" : "O1:1,O1:2";
+        Assert.Equal(ExitReason.ScriptEnded, hvh.Play(ScriptedGameIO.FromCsv(opening)).Reason);
         Assert.Equal(2, hvh.History.Count);
 
         // Human vs Computer, both levels: one human move gets one computer reply
         foreach (AiLevel level in new[] { AiLevel.Dumb, AiLevel.Smarter })
         {
             Game hvc = factory.CreateGame(new GameSetup(GameMode.HvC, level));
-            hvc.Play(new TestIO($"{code}1:1", "quit"));
+            hvc.Play(new TestIO(family == "reversi" ? "P3:4" : "O1:1", "quit"));
             Assert.Equal(2, hvc.History.Count);
         }
 

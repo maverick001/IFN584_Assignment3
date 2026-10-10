@@ -6,6 +6,10 @@ namespace BoardGames.Gomoku;
 // Replace CreateWinStrategy with FiveInARowWin and CreateHelp with real rules text.
 public abstract class GomokuFactoryBase : GameFactoryBase
 {
+    // Task 3 integration only; Task 2 owns game rules, inventory and views.
+    // Task 4 replaces the inherited Dumb placeholder with its random strategy.
+    public override IComputerStrategy CreateComputerStrategy(AiLevel level) =>
+        level == AiLevel.Smarter ? new SmarterGomokuStrategy() : base.CreateComputerStrategy(level);
     public override Board CreateBoard() => new(10, 10);
     public override IWinStrategy CreateWinStrategy() => new DrawOnTerminalStrategy();   // TODO C: FiveInARowWin
     public override IHelpProvider CreateHelp() => new BasicHelpProvider("PLACEHOLDER: place stones; the real five-in-a-row rules come with Task 2.");

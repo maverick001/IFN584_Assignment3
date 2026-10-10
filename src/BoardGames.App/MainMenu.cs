@@ -90,6 +90,17 @@ public sealed class MainMenu
         game.Repository = _repository;
         while (true)
         {
+            // Replay restores the result as well as the board. A completed save
+            // must be displayed without starting another turn in the core loop.
+            if (game.Result.IsOver)
+            {
+                game.View.Render();
+                GameResult result = game.Result;
+                _io.WriteLine(result.Kind == GameResultKind.Win
+                    ? $"{result.Winner!.Name} ({result.Winner.Symbol}) wins: {result.Reason}."
+                    : $"The game is a draw: {result.Reason}.");
+                return;
+            }
             GameOutcome outcome = game.Play(_io);
             if (outcome.Reason != ExitReason.LoadRequested) return;
 

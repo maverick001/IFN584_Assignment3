@@ -2,10 +2,8 @@ using BoardGames.Core;
 
 namespace BoardGames.Reversi;
 
-// PLACEHOLDER for Task 3 (B). It plays, so the menu works, but any empty cell is "legal" and nothing is flanked or flipped.
-// Replace Validate and GetLegalMoves with the real flanking rules, and write ReversiPlaceCommand
-// (it must remember the flipped disks so Undo can flip them back, see PlacePieceCommand for the shape).
-// You do NOT write pass code: the loop builds the PassCommand. You only decide in Validate when a PASS is allowed.
+// All three variants use the same placement, flanking and PASS rules.
+// The factory supplies the victory objective and the computer strategy.
 public sealed class ReversiGame : Game
 {
     public ReversiGame(GameParts parts, GameSetup setup) : base(parts, setup)
@@ -38,15 +36,14 @@ public sealed class ReversiGame : Game
             return ValidationResult.Fail($"{place.At} is off the board: rows and columns go from 1 to {board.Rows}.");
         if (board[place.At] != null)
             return ValidationResult.Fail($"Cell {place.At} is already taken.");
-        return ValidationResult.Ok;   // TODO B: it must also flank at least one opponent disk
+        return ReversiRules.GetFlips(board, State.Current, place.At).Count > 0
+            ? ValidationResult.Ok
+            : ValidationResult.Fail("A Reversi placement must flank at least one opponent disk.");
     }
 
     protected override IMoveCommand CreateCommand(PlaceInput move) =>
-        new PlacePieceCommand(State.Current, move.Code, move.At, PieceKind.Disk);   // TODO B: ReversiPlaceCommand that also flips
+        new ReversiPlaceCommand(State.Current, move.At);
 
     public override IReadOnlyList<PlaceInput> GetLegalMoves(Player player) =>
-        State.Board.AllPositions()
-            .Where(pos => State.Board[pos] == null)
-            .Select(pos => new PlaceInput("P", pos))
-            .ToList();
+        ReversiRules.GetLegalMoves(State.Board, player);
 }
