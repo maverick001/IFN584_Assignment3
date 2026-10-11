@@ -2,7 +2,7 @@
 
 The shared Task 1 core for Gomoku and Reversi, with Task 3 Reversi rules, Smarter AI and JSON persistence implemented. Task 2's Gomoku rules and views and Task 4's random Dumb AI remain to be integrated. Core is unchanged.
 
-Task 3 documentation: [implementation handover](docs/task3/Task3_Handover.md), [Strategy and Command report draft](docs/task3/Task3_Report.md), [Reversi object diagram](docs/task3/diagrams/reversi-object.svg), and [save/load sequence diagram](docs/task3/diagrams/save-load-sequence.svg). The remaining sections describe the Task 1 interface contract and ownership boundaries.
+Task 3 documentation: [implementation handover](docs/task3/Task3_Handover.md), [Reversi object diagram](docs/task3/diagrams/reversi-object.svg), and [save/load sequence diagram](docs/task3/diagrams/save-load-sequence.svg). The remaining sections describe the Task 1 interface contract and ownership boundaries.
 
 ## Read in this order
 

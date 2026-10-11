@@ -11,7 +11,7 @@ Branch: `task3-reversi-ai-persistence`.
 | Reversi Smarter AI | `SmarterReversiStrategy : IComputerStrategy` | Maximum/minimum flips, corner preference, third-corner win and defence, nine full HvC games |
 | Gomoku Smarter AI | `SmarterGomokuStrategy : IComputerStrategy` | Four directions, heavy stones, gap blocking, win priority, legal Eraser simulation |
 | Save/load | `BoardGames.Persistence.JsonGameRepository : IGameRepository` | Twenty-four setup round trips, menu integration, PASS replay, corruption handling, immediate undo |
-| Design/report | `Task3_Report.md`, two SVG diagrams and their Mermaid sources | Object snapshot matches the CLI board; diagrams reference implemented classes |
+| Design diagrams | Two SVG diagrams and their Mermaid sources | Object snapshot matches the CLI board; diagrams reference implemented classes |
 
 `src/BoardGames.Core` is unchanged. App integration adds a Persistence project reference, injects the repository in `Program.cs`, and displays an already completed save's board and result in `MainMenu` without starting another turn. `GomokuFactories.cs` has a small AI selection override only; Task 2's rules and views remain untouched. `AppTests.cs` now uses legal Reversi opening moves rather than the placeholder's arbitrary placements.
 
