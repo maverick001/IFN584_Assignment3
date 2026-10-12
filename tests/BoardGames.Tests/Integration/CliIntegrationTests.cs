@@ -37,7 +37,36 @@ public class CliIntegrationTests
 
         Assert.Equal(0, exit);
         Assert.Contains("Game over.", text);
-        Assert.Contains("Player 1", text);
+        Assert.Contains("Result: Player 1 (X) wins: five stones in a row.", text);
+    }
+
+    [Fact]
+    public void The_status_block_lists_the_active_player_the_counts_and_the_result_in_that_order()
+    {
+        (_, string text) = RunCli("--game", "reversi", "--variant", "standard", "P3:4,P3:3,P4:3,P5:3,P4:2");
+
+        string[] lines = text.Split('\n').Select(line => line.TrimEnd('\r')).ToArray();
+        int status = Array.FindIndex(lines, line => line.StartsWith("Active player:"));
+        Assert.True(status >= 0);
+        Assert.Equal("Active player: Player 2 (O)   Counts: X=5  O=4", lines[status]);
+        Assert.Equal("Result: in progress.", lines[status + 1]);
+        Assert.Equal("Game in progress.", lines[status + 2]);
+    }
+
+    [Fact]
+    public void A_finished_fog_game_still_prints_the_active_players_fogged_view()
+    {
+        // P1 completes five in a row on row 5; it is then P2's turn, and P2 has stones only around row 1.
+        (int exit, string text) = RunCli("--game", "gomoku", "--variant", "fog",
+            "O5:1,O1:1,O5:2,O1:2,O5:3,O1:3,O5:4,O1:4,O5:5");
+
+        Assert.Equal(0, exit);
+        string[] grid = ParseGrid(text);
+        Assert.DoesNotContain('X', grid[4]);   // P1's winning row stays hidden from P2
+        Assert.Equal("OOOO.?????", grid[0]);
+        Assert.Contains("Active player: Player 2 (O)", text);
+        Assert.Contains("Result: Player 1 (X) wins: five stones in a row.", text);
+        Assert.Contains("Game over.", text);
     }
 
     [Fact]

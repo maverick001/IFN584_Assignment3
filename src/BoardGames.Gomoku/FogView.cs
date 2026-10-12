@@ -15,6 +15,9 @@ public sealed class FogView : IBoardView
 
     public bool AutoRedraw{get; set;} = true;
 
+    // true: a finished game shows every stone. The CLI test mode turns this off and keeps the active player's view.
+    public bool RevealOnGameOver { get; set; } = true;
+
     public void Attach(Game game)
     {
         _game = game;
@@ -87,7 +90,7 @@ public sealed class FogView : IBoardView
                 Position position = new Position(r, c);
                 char symbol = '?';
 
-                if(_game.Result.IsOver || IsVisible(board, position, player))
+                if((RevealOnGameOver && _game.Result.IsOver) || IsVisible(board, position, player))
                 {
                     sb.Append($"{board[new Position(r, c)]?.Symbol ?? '.',3}");
                 }
