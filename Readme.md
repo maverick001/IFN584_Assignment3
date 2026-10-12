@@ -15,7 +15,7 @@ Open `BoardGames.slnx` (the .NET 10 solution format: needs a recent Visual Studi
 
 ```
 dotnet build                                   build everything
-dotnet test                                    run all tests (193 cases)
+dotnet test                                    run all tests (228 cases)
 dotnet run --project src/BoardGames.App        the interactive menu
 ```
 
@@ -76,6 +76,7 @@ tests/BoardGames.Tests   xUnit. Core/ = Task 1 tests (board, parser, undo and re
 | Tests                                                        | Owner  | Where                                                |
 | ------------------------------------------------------------ | ------ | ---------------------------------------------------- |
 | Core, menu and the integration check on the six placeholders | Task 1 | `tests/BoardGames.Tests/Core/` and `AppTests.cs`     |
+| Cross-game integration tests (Gomoku, Reversi, save, load, CLI) | Task 1 | `tests/BoardGames.Tests/Integration/`                 |
 | Three starter CLI test mode tests                            | Task 1 | CLI section of `AppTests.cs`                         |
 | Gomoku unit and integration tests                            | Task 2 | `tests/BoardGames.Tests/Gomoku/`                     |
 | Reversi unit and integration tests                           | Task 3 | `tests/BoardGames.Tests/Reversi/`                    |
