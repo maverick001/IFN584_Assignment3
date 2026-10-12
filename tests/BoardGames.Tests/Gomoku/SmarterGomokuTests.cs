@@ -70,12 +70,15 @@ public class SmarterGomokuTests
         game.State.Board.Apply(Enumerable.Range(3, 4).Select(col =>
             new CellChange(new Position(5, col), null, new Piece(game.State.Players[1], PieceKind.Ordinary))));
         var legal = game.GetLegalMoves(game.State.Current).ToList();
-        var eraser = new PlaceInput("E", new Position(5, 4));
-        legal.Add(eraser); // Task 2's future legal list supplies this input.
         string[] before = game.State.Board.ToSnapshot();
         int events = 0;
         game.State.Board.BoardChanged += (_, _) => events++;
-        Assert.Equal(eraser, new SmarterGomokuStrategy().Choose(game.State, game.State.Current, legal));
+        MoveInput choice = new SmarterGomokuStrategy().Choose(game.State, game.State.Current, legal);
+        // Erasing any of the four opposing stones breaks the line, so any of them is a correct reply.
+        PlaceInput eraser = Assert.IsType<PlaceInput>(choice);
+        Assert.Equal("E", eraser.Code);
+        Assert.Equal(5, eraser.At.Row);
+        Assert.InRange(eraser.At.Col, 3, 6);
         Assert.Equal(before, game.State.Board.ToSnapshot());
         Assert.Equal(2, game.State.Current.Left(PieceKind.Eraser));
         Assert.Equal(0, events);
