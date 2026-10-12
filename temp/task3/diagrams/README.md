@@ -7,7 +7,7 @@ The object diagram is a runtime snapshot, not a class diagram. Underlined names 
 Regenerate the SVG files:
 
 ```powershell
-python docs/task3/diagrams/generate_diagrams.py
+python temp/task3/diagrams/generate_diagrams.py
 ```
 
 PNG files are generated QA previews. They can also be used if the report editor cannot import SVG. `render_previews.cjs` takes the directory containing the installed `sharp` package as its first argument; no runtime package is added to the C# solution.
