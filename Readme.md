@@ -19,6 +19,15 @@ dotnet test                                    run all tests (228 cases)
 dotnet run --project src/BoardGames.App        the interactive menu
 ```
 
+CLI test mode takes a comma-separated script and plays it without prompts. Run it from `src/BoardGames.App` (there is no project in the repository root, so a bare `dotnet run` fails there), or add `--project src/BoardGames.App` from the root:
+
+```
+cd src/BoardGames.App
+dotnet run -- --game reversi --variant corner "P3:4,P3:3,P3:2,P2:2,P1:2,P1:1"
+```
+
+It prints the final board, then the active player, the stone or disk counts and the result (winner, draw or in progress).
+
 ## Where things are
 
 ```

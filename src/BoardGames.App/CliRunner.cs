@@ -1,10 +1,12 @@
 using BoardGames.Core;
+using BoardGames.Gomoku;
 
 namespace BoardGames.App;
 
 // CLI test mode (Task 4, D, extends this):
 // dotnet run -- --game reversi --variant corner "P3:4,P3:3,P4:3"
-// Plays the script without prompts (moves and PASS only), prints the final board and the status.
+// Plays the script without prompts (moves and PASS only), prints the final board and the status:
+// active player, stone or disk counts, and the result (winner, draw or in progress).
 // Starter version: it works end to end, D adds whatever else the grading scripts need.
 public static class CliRunner
 {
@@ -44,6 +46,8 @@ public static class CliRunner
 
         Game g = factory.CreateGame(new GameSetup(GameMode.HvH, AiLevel.Dumb));
         g.View.AutoRedraw = false;                       // only the final board is drawn
+        // A finished Fog game would reveal every stone; the CLI always prints the active player's view.
+        if (g.View is FogView fog) fog.RevealOnGameOver = false;
         var io = ScriptedGameIO.FromCsv(script);
         GameOutcome outcome = g.Play(io);
 
@@ -56,8 +60,16 @@ public static class CliRunner
         string counts = string.Join("  ", g.State.Players.Select(p =>
             $"{p.Symbol}={board.AllPositions().Count(pos => board[pos]?.Owner == p)}"));
         output.WriteLine($"Active player: {g.State.Current.Name} ({g.State.Current.Symbol})   Counts: {counts}");
+        output.WriteLine(DescribeResult(g.Result));
         output.WriteLine(g.Result.IsOver ? "Game over." : "Game in progress.");
 
         return outcome.Reason == ExitReason.InvalidScriptCommand ? 1 : 0;
     }
+
+    private static string DescribeResult(GameResult result) => result.Kind switch
+    {
+        GameResultKind.Win => $"Result: {result.Winner!.Name} ({result.Winner.Symbol}) wins: {result.Reason}.",
+        GameResultKind.Draw => $"Result: draw: {result.Reason}.",
+        _ => "Result: in progress.",
+    };
 }
