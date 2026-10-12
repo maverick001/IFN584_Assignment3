@@ -5,6 +5,7 @@ using BoardGames.Tests.Support;
 namespace BoardGames.Tests;
 
 // The main menu, the CLI runner and the six placeholder variants wired together in the App project.
+[Collection(Integration.ConsoleCollection.Name)]   // the CLI tests redirect Console.Out, so they must not run in parallel
 public class AppTests
 {
     // ------------------------------------------------------------ the six registered variants
