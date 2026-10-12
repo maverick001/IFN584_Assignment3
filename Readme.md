@@ -1,18 +1,21 @@
-# Board Game Framework (Task 1)
+# Board Game Framework
 
-The shared core for the Gomoku and Reversi games. It comes with placeholder games that Tasks 2 and 3 replace, and with a working menu and CLI starter that Task 4 extends.
+The shared Task 1 core for Gomoku and Reversi, with Task 3 Reversi rules, Smarter AI and JSON persistence implemented. Task 2's Gomoku rules and views and Task 4's random Dumb AI remain to be integrated. Core is unchanged.
+
+Task 3 documentation: [implementation handover](temp/task3/Task3_Handover.md), [Reversi object diagram](temp/task3/diagrams/reversi-object.svg), and [save/load sequence diagram](temp/task3/diagrams/save-load-sequence.svg). The remaining sections describe the Task 1 interface contract and ownership boundaries.
 
 ## Read in this order
 
 1. `Task1_Briefing.docx`: the design (patterns, interfaces, how the game loop and undo behave).
-2. `src/BoardGames.Gomoku/GomokuGame.cs`: the smallest complete game. Read it as the pattern for yours.
-3. `tests/BoardGames.Tests/AppTests.cs`: how to test through the menu, the CLI and scripted input.
+2. `temp/task3/Task3_Handover.md`: current implementation and remaining team integration.
+3. `src/BoardGames.Reversi/ReversiGame.cs`: a game using the shared loop and real variant strategies.
+4. `tests/BoardGames.Tests/AppTests.cs`: how to test through the menu, the CLI and scripted input.
 
 Open `BoardGames.slnx` (the .NET 10 solution format: needs a recent Visual Studio or Rider, or just use the command line).
 
 ```
 dotnet build                                   build everything
-dotnet test                                    run all tests (23 test methods, 50 cases)
+dotnet test                                    run all tests (228 cases)
 dotnet run --project src/BoardGames.App        the interactive menu
 ```
 
@@ -31,7 +34,8 @@ src/BoardGames.Core      Task 1. Frozen.
   Persistence.cs  GameSaveData, IGameRepository
 
 src/BoardGames.Gomoku    Task 2. Placeholder GomokuGame and 3 factories: replace the bodies.
-src/BoardGames.Reversi   Task 3. Placeholder ReversiGame and 3 factories: replace the bodies.
+src/BoardGames.Reversi   Task 3. Real Reversi rules, undoable placement, win and Smarter AI strategies.
+src/BoardGames.Persistence Task 3. JsonGameRepository: replay-based loading with snapshot verification.
 src/BoardGames.App       Program, MainMenu, CatalogSetup (the list of games), CliRunner (Task 4 extends)
 tests/BoardGames.Tests   xUnit. Core/ = Task 1 tests (board, parser, undo and redo), AppTests.cs = menu, CLI and
                          the six placeholders, Support/TestHelpers.cs = TestIO and CommandAssert.
@@ -72,6 +76,7 @@ tests/BoardGames.Tests   xUnit. Core/ = Task 1 tests (board, parser, undo and re
 | Tests                                                        | Owner  | Where                                                |
 | ------------------------------------------------------------ | ------ | ---------------------------------------------------- |
 | Core, menu and the integration check on the six placeholders | Task 1 | `tests/BoardGames.Tests/Core/` and `AppTests.cs`     |
+| Cross-game integration tests (Gomoku, Reversi, save, load, CLI) | Task 1 | `tests/BoardGames.Tests/Integration/`                 |
 | Three starter CLI test mode tests                            | Task 1 | CLI section of `AppTests.cs`                         |
 | Gomoku unit and integration tests                            | Task 2 | `tests/BoardGames.Tests/Gomoku/`                     |
 | Reversi unit and integration tests                           | Task 3 | `tests/BoardGames.Tests/Reversi/`                    |

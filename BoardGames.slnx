@@ -8,6 +8,7 @@
     <Project Path="src/BoardGames.App/BoardGames.App.csproj" />
     <Project Path="src/BoardGames.Core/BoardGames.Core.csproj" />
     <Project Path="src/BoardGames.Gomoku/BoardGames.Gomoku.csproj" />
+    <Project Path="src/BoardGames.Persistence/BoardGames.Persistence.csproj" />
     <Project Path="src/BoardGames.Reversi/BoardGames.Reversi.csproj" />
   </Folder>
   <Folder Name="/tests/">

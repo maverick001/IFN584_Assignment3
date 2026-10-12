@@ -4,6 +4,7 @@
     <ProjectReference Include="..\BoardGames.Core\BoardGames.Core.csproj" />
     <ProjectReference Include="..\BoardGames.Gomoku\BoardGames.Gomoku.csproj" />
     <ProjectReference Include="..\BoardGames.Reversi\BoardGames.Reversi.csproj" />
+    <ProjectReference Include="..\BoardGames.Persistence\BoardGames.Persistence.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

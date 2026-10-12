@@ -81,15 +81,15 @@ public sealed class GomokuPlus : Game
             {
                 return ValidationResult.Fail("You have no more erasers left");
             }
-            else if(board[place.At] == null)
+            else if(board[place.At] is not Piece target)
             {
                 return ValidationResult.Fail($"{place.At} is empty and cannot be erased.");
             }
-            else if(board[place.At].Kind == PieceKind.Heavy)
+            else if(target.Kind == PieceKind.Heavy)
             {
                 return ValidationResult.Fail($"{place.At} contains a heavy stone and cannot erased.");
             }
-            else if(board[place.At].Owner.Index == State.Current.Index)
+            else if(target.Owner.Index == State.Current.Index)
             {
                 return ValidationResult.Fail($"{place.At} Is your own stone and cannot be erased.");
             }

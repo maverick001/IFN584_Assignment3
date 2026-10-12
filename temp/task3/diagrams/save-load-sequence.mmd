@@ -1,0 +1,59 @@
+sequenceDiagram
+    participant Menu as menu:MainMenu
+    participant G as game:Game
+    participant R as repository:JsonGameRepository
+    participant F as File system
+    participant C as catalog:GameCatalog
+    participant Factory as factory:IGameFactory
+    participant H as history:CommandHistory
+    participant Cmd as command:IMoveCommand
+
+    Note over Menu,Cmd: SAVE during an interactive game
+    Note over G: TakeHumanTurn parses save path; HandleControl invokes repository
+    G->>R: Save(game, path)
+    R->>G: ToSaveData()
+    G->>H: Records()
+    H-->>G: applied MoveRecords, oldest first
+    Note over G: Board.ToSnapshot() and copied player inventories
+    G-->>R: GameSaveData(version, keys, mode, level, board, inventory, moves)
+    R->>F: WriteAllText(temporary, JSON)
+    R->>F: Move(temporary, destination, overwrite=true)
+    R-->>G: save succeeded
+    Note over G: GameIO prints saved message; turn does not change
+
+    Note over Menu,Cmd: LOAD from menu or after GameOutcome.LoadRequested
+    Menu->>R: Load(path, catalog)
+    R->>F: ReadAllText(path)
+    F-->>R: JSON
+    R->>R: RequireFields / Deserialize / ValidateData
+    R->>C: Resolve(familyKey, variantKey)
+    C-->>R: registered factory
+    R->>Factory: CreateGame(GameSetup(mode, level))
+    Note over Factory,G: Build parts, Assemble fresh game, attach view; Reversi sets centre disks
+    Factory-->>R: fresh game
+    R->>G: View.AutoRedraw = false
+    loop each applied MoveRecord
+        R->>R: reject record if previous Result.IsOver
+        R->>G: Replay([record])
+        G->>G: verify actor / Validate / CreateCommand
+        G->>H: Do(command, State)
+        H->>Cmd: Execute(State)
+        Note over Cmd: ReversiPlaceCommand records CellChanges and calls Board.Apply
+        Cmd-->>H: placement and flips applied
+        Note over H: push undo, clear redo, increment MoveCount
+        H-->>G: applied
+        G->>G: OnMoveApplied / Win.Evaluate / TurnChanged
+        G-->>R: replayed
+    end
+    Note over R,G: Empty history: Replay(empty) evaluates initial result
+    R->>G: read Board.ToSnapshot() and player inventories
+    G-->>R: reconstructed values
+    R->>R: compare snapshots and inventories
+    R->>G: restore AutoRedraw; Repository = this
+    R-->>Menu: verified game with rebuilt undo stack
+    alt loaded result is already complete
+        Note over Menu,G: Menu renders the board and result; returns without another move
+    else game is still in progress
+        Menu->>G: Play(io)
+    end
+    Note over Menu,G: Failure branch: TryLoad catches error and keeps the current game

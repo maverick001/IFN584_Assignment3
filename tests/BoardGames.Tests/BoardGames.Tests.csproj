@@ -22,6 +22,7 @@
     <ProjectReference Include="..\..\src\BoardGames.Core\BoardGames.Core.csproj" />
     <ProjectReference Include="..\..\src\BoardGames.Gomoku\BoardGames.Gomoku.csproj" />
     <ProjectReference Include="..\..\src\BoardGames.Reversi\BoardGames.Reversi.csproj" />
+    <ProjectReference Include="..\..\src\BoardGames.Persistence\BoardGames.Persistence.csproj" />
     <ProjectReference Include="..\..\src\BoardGames.App\BoardGames.App.csproj" />
   </ItemGroup>
 
