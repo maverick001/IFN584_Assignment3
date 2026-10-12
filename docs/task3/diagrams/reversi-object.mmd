@@ -1,0 +1,29 @@
+flowchart TB
+    game["<u>game : ReversiGame</u><br/>Descriptor = reversi/standard<br/>Setup = HvH, Dumb<br/>Result.Kind = InProgress"]
+    state["<u>state : GameState</u><br/>MoveCount = 4<br/>/Current = p1<br/>/TurnNumber = 3"]
+    history["<u>history : CommandHistory</u><br/>_undo = [c1, c2, c3, c4]<br/>_redo = []<br/>/CanUndo = true"]
+    board["<u>board : Board</u><br/>Rows = 8; Cols = 8<br/>........<br/>........<br/>..OX....<br/>..OXX...<br/>..OOO...<br/>........<br/>........<br/>........<br/>Derived counts: X=3, O=5"]
+    p1["<u>p1 : HumanPlayer</u><br/>Index = 0; Symbol = X<br/>Inventory = {}"]
+    p2["<u>p2 : HumanPlayer</u><br/>Index = 1; Symbol = O<br/>Inventory = {}"]
+    c1["<u>c1 : ReversiPlaceCommand</u><br/>Actor = p1; At = (3,4)<br/>2 retained CellChanges"]
+    c2["<u>c2 : ReversiPlaceCommand</u><br/>Actor = p2; At = (3,3)<br/>2 retained CellChanges"]
+    c3["<u>c3 : ReversiPlaceCommand</u><br/>Actor = p1; At = (4,3)<br/>2 retained CellChanges"]
+    c4["<u>c4 : ReversiPlaceCommand</u><br/>Actor = p2; At = (5,3)<br/>_changes = [d1, d2, d3]"]
+    changes["<u>d1, d2, d3 : CellChange</u><br/>d1: (5,3), null → O Disk<br/>d2: (4,3), X Disk → O Disk<br/>d3: (5,4), X Disk → O Disk<br/>Before/After pieces reference p1/p2"]
+    win["<u>win : MajorityWin</u>"]
+    view["<u>view : ConsoleBoardView</u><br/>_game = game<br/>AutoRedraw = false (CLI)"]
+    game -->|State| state
+    game -->|History| history
+    game -->|Win| win
+    game -->|View| view
+    view -.->|TurnChanged subscription| game
+    state -->|Board| board
+    state -->|Players 0| p1
+    state -->|Players 1| p2
+    history -->|_undo 0| c1
+    history -->|_undo 1| c2
+    history -->|_undo 2| c3
+    history -->|_undo 3| c4
+    c4 -->|_changes| changes
+    changes -.->|piece owners| p1
+    changes -.->|piece owners| p2

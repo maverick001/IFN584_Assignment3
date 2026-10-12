@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1480" height="1090" viewBox="0 0 1480 1090">
+<title>Reversi runtime object diagram after four legal moves</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/></marker></defs>
+<style>text{font-family:Arial,sans-serif;fill:#152238}.mono{font-family:Consolas,monospace}.object{font-weight:bold;text-decoration:underline}.edge{fill:none;stroke:#334155;stroke-width:1.6;marker-end:url(#arrow)}.dash{stroke-dasharray:6 5}</style>
+<rect width="1480" height="1090" fill="white"/>
+<text x="50" y="35" font-size="26" class="" text-anchor="start">Reversi runtime object diagram</text>
+<text x="50" y="62" font-size="17" class="" text-anchor="start">Standard Reversi after P3:4, P3:3, P4:3, P5:3 — actual CLI state</text>
+<rect x="50" y="115" width="360" height="145" fill="#f8fafc" stroke="#64748b" stroke-width="1.3" />
+<text x="64" y="143" font-size="17" class="object" text-anchor="start">game : ReversiGame</text>
+<path d="M50 156 H410" stroke="#94a3b8"/>
+<text x="64" y="181" font-size="16" class="" text-anchor="start">Descriptor = reversi/standard</text>
+<text x="64" y="205" font-size="16" class="" text-anchor="start">Setup = HvH, Dumb</text>
+<text x="64" y="229" font-size="16" class="" text-anchor="start">Result.Kind = InProgress</text>
+<rect x="560" y="115" width="360" height="145" fill="#f8fafc" stroke="#64748b" stroke-width="1.3" />
+<text x="574" y="143" font-size="17" class="object" text-anchor="start">state : GameState</text>
+<path d="M560 156 H920" stroke="#94a3b8"/>
+<text x="574" y="181" font-size="16" class="" text-anchor="start">MoveCount = 4</text>
+<text x="574" y="205" font-size="16" class="" text-anchor="start">/Current = p1</text>
+<text x="574" y="229" font-size="16" class="" text-anchor="start">/TurnNumber = 3</text>
+<rect x="1030" y="115" width="390" height="145" fill="#f8fafc" stroke="#64748b" stroke-width="1.3" />
+<text x="1044" y="143" font-size="17" class="object" text-anchor="start">history : CommandHistory</text>
+<path d="M1030 156 H1420" stroke="#94a3b8"/>
+<text x="1044" y="181" font-size="16" class="" text-anchor="start">_undo = [c1, c2, c3, c4]</text>
+<text x="1044" y="205" font-size="16" class="" text-anchor="start">_redo = []</text>
+<text x="1044" y="229" font-size="16" class="" text-anchor="start">/CanUndo = true</text>
+<polyline points="410,205 560,205" class="edge "/>
+<text x="465" y="197" font-size="15" class="" text-anchor="start">State</text>
+<polyline points="350,115 350,90 1150,90 1150,115" class="edge "/>
+<text x="960" y="84" font-size="15" class="" text-anchor="start">History</text>
+<rect x="50" y="315" width="200" height="75" fill="#f8fafc" stroke="#64748b" stroke-width="1.3" />
+<text x="64" y="343" font-size="17" class="object" text-anchor="start">win : MajorityWin</text>
+<path d="M50 356 H250" stroke="#94a3b8"/>
+<rect x="290" y="315" width="260" height="100" fill="#f8fafc" stroke="#64748b" stroke-width="1.3" />
+<text x="304" y="343" font-size="17" class="object" text-anchor="start">view : ConsoleBoardView</text>
+<path d="M290 356 H550" stroke="#94a3b8"/>
+<text x="304" y="381" font-size="16" class="" text-anchor="start">_game = game</text>
+<text x="304" y="405" font-size="16" class="" text-anchor="start">AutoRedraw = false (CLI)</text>
+<polyline points="150,260 150,315" class="edge "/>
+<text x="160" y="293" font-size="15" class="" text-anchor="start">Win</text>
+<polyline points="390,260 390,315" class="edge "/>
+<text x="402" y="293" font-size="15" class="" text-anchor="start">View</text>
+<polyline points="290,352 275,352 275,260" class="edge dash"/>
+<text x="282" y="280" font-size="15" class="" text-anchor="start">TurnChanged</text>
+<rect x="590" y="315" width="240" height="125" fill="#f8fafc" stroke="#64748b" stroke-width="1.3" />
+<text x="604" y="343" font-size="17" class="object" text-anchor="start">p1 : HumanPlayer</text>
+<path d="M590 356 H830" stroke="#94a3b8"/>
+<text x="604" y="381" font-size="16" class="" text-anchor="start">Index = 0; Symbol = X</text>
+<text x="604" y="405" font-size="16" class="" text-anchor="start">Inventory = {}</text>
+<rect x="880" y="315" width="240" height="125" fill="#f8fafc" stroke="#64748b" stroke-width="1.3" />
+<text x="894" y="343" font-size="17" class="object" text-anchor="start">p2 : HumanPlayer</text>
+<path d="M880 356 H1120" stroke="#94a3b8"/>
+<text x="894" y="381" font-size="16" class="" text-anchor="start">Index = 1; Symbol = O</text>
+<text x="894" y="405" font-size="16" class="" text-anchor="start">Inventory = {}</text>
+<polyline points="690,260 710,315" class="edge "/>
+<text x="595" y="293" font-size="15" class="" text-anchor="start">Players[0]</text>
+<polyline points="810,260 1000,315" class="edge "/>
+<text x="889" y="289" font-size="15" class="" text-anchor="start">Players[1]</text>
+<polyline points="560,236 565,236 565,470 285,470 285,505" class="edge "/>
+<text x="292" y="491" font-size="15" class="" text-anchor="start">Board</text>
+<rect x="50" y="505" width="450" height="470" fill="#f8fafc" stroke="#64748b" stroke-width="1.3" />
+<text x="64" y="533" font-size="17" class="object" text-anchor="start">board : Board</text>
+<path d="M50 546 H500" stroke="#94a3b8"/>
+<text x="64" y="571" font-size="16" class="" text-anchor="start">Rows = 8; Cols = 8</text>
+<text x="64" y="595" font-size="16" class="" text-anchor="start">_cells rendered as symbols below</text>
+<text x="100" y="626" font-size="20" class="mono" text-anchor="start">    1  2  3  4  5  6  7  8</text>
+<text x="100" y="662" font-size="20" class="mono" text-anchor="start">1   .  .  .  .  .  .  .  .</text>
+<text x="100" y="692" font-size="20" class="mono" text-anchor="start">2   .  .  .  .  .  .  .  .</text>
+<text x="100" y="722" font-size="20" class="mono" text-anchor="start">3   .  .  O  X  .  .  .  .</text>
+<text x="100" y="752" font-size="20" class="mono" text-anchor="start">4   .  .  O  X  X  .  .  .</text>
+<text x="100" y="782" font-size="20" class="mono" text-anchor="start">5   .  .  O  O  O  .  .  .</text>
+<text x="100" y="812" font-size="20" class="mono" text-anchor="start">6   .  .  .  .  .  .  .  .</text>
+<text x="100" y="842" font-size="20" class="mono" text-anchor="start">7   .  .  .  .  .  .  .  .</text>
+<text x="100" y="872" font-size="20" class="mono" text-anchor="start">8   .  .  .  .  .  .  .  .</text>
+<text x="80" y="945" font-size="18" class="" text-anchor="start">Derived disk counts: X = 3, O = 5</text>
+<rect x="575" y="495" width="845" height="335" fill="white" stroke="#64748b" stroke-width="1.3" stroke-dasharray="6 5"/>
+<text x="590" y="519" font-size="16" class="" text-anchor="start">Applied commands in chronological order; c4 is most recent</text>
+<polyline points="1350,260 1445,260 1445,540 1420,540" class="edge "/>
+<text x="1278" y="473" font-size="15" class="" text-anchor="start">_undo[0..3]</text>
+<rect x="595" y="540" width="375" height="115" fill="#f8fafc" stroke="#64748b" stroke-width="1.3" />
+<text x="609" y="568" font-size="17" class="object" text-anchor="start">c1 : ReversiPlaceCommand</text>
+<path d="M595 581 H970" stroke="#94a3b8"/>
+<text x="609" y="606" font-size="16" class="" text-anchor="start">Actor = p1; At = (3,4)</text>
+<text x="609" y="630" font-size="16" class="" text-anchor="start">2 retained CellChanges</text>
+<rect x="1010" y="540" width="390" height="115" fill="#f8fafc" stroke="#64748b" stroke-width="1.3" />
+<text x="1024" y="568" font-size="17" class="object" text-anchor="start">c2 : ReversiPlaceCommand</text>
+<path d="M1010 581 H1400" stroke="#94a3b8"/>
+<text x="1024" y="606" font-size="16" class="" text-anchor="start">Actor = p2; At = (3,3)</text>
+<text x="1024" y="630" font-size="16" class="" text-anchor="start">2 retained CellChanges</text>
+<rect x="595" y="690" width="375" height="115" fill="#f8fafc" stroke="#64748b" stroke-width="1.3" />
+<text x="609" y="718" font-size="17" class="object" text-anchor="start">c3 : ReversiPlaceCommand</text>
+<path d="M595 731 H970" stroke="#94a3b8"/>
+<text x="609" y="756" font-size="16" class="" text-anchor="start">Actor = p1; At = (4,3)</text>
+<text x="609" y="780" font-size="16" class="" text-anchor="start">2 retained CellChanges</text>
+<rect x="1010" y="690" width="390" height="115" fill="#f8fafc" stroke="#64748b" stroke-width="1.3" />
+<text x="1024" y="718" font-size="17" class="object" text-anchor="start">c4 : ReversiPlaceCommand</text>
+<path d="M1010 731 H1400" stroke="#94a3b8"/>
+<text x="1024" y="756" font-size="16" class="" text-anchor="start">Actor = p2; At = (5,3)</text>
+<text x="1024" y="780" font-size="16" class="" text-anchor="start">_changes = [d1, d2, d3]</text>
+<rect x="585" y="885" width="260" height="130" fill="#f8fafc" stroke="#64748b" stroke-width="1.3" />
+<text x="599" y="913" font-size="17" class="object" text-anchor="start">d1 : CellChange</text>
+<path d="M585 926 H845" stroke="#94a3b8"/>
+<text x="599" y="951" font-size="16" class="" text-anchor="start">At = (5,3)</text>
+<text x="599" y="975" font-size="16" class="" text-anchor="start">Before = null</text>
+<text x="599" y="999" font-size="16" class="" text-anchor="start">After = Piece(p2, Disk)</text>
+<rect x="865" y="885" width="260" height="130" fill="#f8fafc" stroke="#64748b" stroke-width="1.3" />
+<text x="879" y="913" font-size="17" class="object" text-anchor="start">d2 : CellChange</text>
+<path d="M865 926 H1125" stroke="#94a3b8"/>
+<text x="879" y="951" font-size="16" class="" text-anchor="start">At = (4,3)</text>
+<text x="879" y="975" font-size="16" class="" text-anchor="start">Before = Piece(p1, Disk)</text>
+<text x="879" y="999" font-size="16" class="" text-anchor="start">After = Piece(p2, Disk)</text>
+<rect x="1145" y="885" width="260" height="130" fill="#f8fafc" stroke="#64748b" stroke-width="1.3" />
+<text x="1159" y="913" font-size="17" class="object" text-anchor="start">d3 : CellChange</text>
+<path d="M1145 926 H1405" stroke="#94a3b8"/>
+<text x="1159" y="951" font-size="16" class="" text-anchor="start">At = (5,4)</text>
+<text x="1159" y="975" font-size="16" class="" text-anchor="start">Before = Piece(p1, Disk)</text>
+<text x="1159" y="999" font-size="16" class="" text-anchor="start">After = Piece(p2, Disk)</text>
+<polyline points="1205,805 1205,851 715,851 715,885" class="edge "/>
+<polyline points="1205,851 995,851 995,885" class="edge "/>
+<polyline points="1205,851 1275,851 1275,885" class="edge "/>
+<text x="590" y="843" font-size="16" class="" text-anchor="start">Retained before/after values reverse both captured disks on undo</text>
+<text x="50" y="1045" font-size="16" class="" text-anchor="start">Underlined names are runtime instances. / marks a derived property. Empty lists are actual empty history/inventory collections.</text>
+<text x="50" y="1073" font-size="16" class="" text-anchor="start">Piece(p1/p2, Disk) denotes an immutable Piece whose Owner references that player; the board does not store X/O characters.</text>
+</svg>
