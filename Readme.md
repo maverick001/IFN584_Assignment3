@@ -7,7 +7,7 @@ A .NET 10 console framework for two-player board games. Both game families are n
 
 Each game can be played Human vs Human or Human vs Computer (Dumb or Smarter AI), saved to and loaded from a JSON file, and driven by a script in CLI test mode.
 
-Still open: **Task 4** polishes the CLI, adds the six spec example scripts as tests and runs the manual system test (see [Task 4 hand-over](#task-4-hand-over-whats-left-and-how-to-test)).
+Still open: **Task 4** adds the six spec example scripts as automated tests and runs the manual system test (see [Task 4 hand-over](#task-4-hand-over-whats-left-and-how-to-test)).
 
 Further documentation: `Task1_Briefing.docx` (the design: patterns, interfaces, game loop, undo), [Task 3 implementation handover](temp/task3/Task3_Handover.md), [Reversi object diagram](temp/task3/diagrams/reversi-object.svg) and [save/load sequence diagram](temp/task3/diagrams/save-load-sequence.svg).
 
@@ -108,7 +108,7 @@ Core also has `ScriptedGameIO.FromCsv("O1:1,O2:2")` for running a script; its `O
 
 ### Still to code
 
-- **CLI polish** in `src/BoardGames.App/CliRunner.cs`, and the six spec example scripts as tests in the CLI section of `AppTests.cs` (or `Integration/CliIntegrationTests.cs`).
+- **The six spec example scripts as automated tests** (spec section 4.5), in `Integration/CliIntegrationTests.cs` or the CLI section of `AppTests.cs`. All six already run correctly from the command line and print the final board, active player, counts and result, so `CliRunner.cs` needs no change unless the system test finds a defect. Standard and Anti Reversi already have a test; the three Gomoku scripts and Corner Reversi do not.
 - Do not edit `src/BoardGames.Core`. If you need a change there, ask the Task 1 owner and say why.
 
 Already done, so nothing to write: the `help` text for all six variants (Gomoku in `GomokuFactories.cs`, Reversi in `ReversiFactories.cs`, with the variant's win rule), the Dumb AI (`DumbGomokuStrategy` and `DumbReversiStrategy`, a random pick from the legal moves; the loop issues the Reversi PASS when there is none) and the Smarter AI. Just read each variant's `help` output during the system test (checklist item 10) and report wrong or unclear wording to the owner of that family.
