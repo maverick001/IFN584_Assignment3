@@ -17,15 +17,21 @@ Branch: `task3-reversi-ai-persistence`.
 
 ## Commands
 
-Run these in the repository root:
+Build and test from the repository root:
 
 ```powershell
 dotnet build BoardGames.slnx -warnaserror
 dotnet test BoardGames.slnx --no-build
-dotnet run --project src/BoardGames.App
-dotnet run --project src/BoardGames.App -- --game reversi --variant standard "P3:4,P3:3,P4:3,P5:3,P4:2"
-dotnet run --project src/BoardGames.App -- --game reversi --variant anti "P4:3,P3:3,P3:4,P5:3,P6:3"
-dotnet run --project src/BoardGames.App -- --game reversi --variant corner "P3:4,P3:3,P3:2,P2:2,P1:2,P1:1"
+```
+
+Run the app from `src/BoardGames.App`:
+
+```powershell
+cd src/BoardGames.App
+dotnet run
+dotnet run -- --game reversi --variant standard "P3:4,P3:3,P4:3,P5:3,P4:2"
+dotnet run -- --game reversi --variant anti "P4:3,P3:3,P3:4,P5:3,P6:3"
+dotnet run -- --game reversi --variant corner "P3:4,P3:3,P3:2,P2:2,P1:2,P1:1"
 ```
 
 For a save/load demonstration, select Standard Reversi / HvH, enter `P3:4` then `P3:3`, use `save reversi-demo.json`, quit and restart. Choose Load game, enter the path, then use `undo`, `redo` and `quit`. A loaded game's redo stack begins empty; an undo after loading creates redo normally. Ignore the demo save when packaging the final source archive.

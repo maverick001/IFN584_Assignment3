@@ -29,12 +29,10 @@ dotnet build
 
 ## Run the app
 
-`dotnet run` needs a folder with exactly one project file. The repository root only has the solution file, so a bare `dotnet run` there fails with "Couldn't find a project to run". Use one of these:
+Run the app from the project folder, `src/BoardGames.App`. `dotnet run` needs a folder with exactly one project file; the repository root only has the solution file, so a bare `dotnet run` there fails with "Couldn't find a project to run".
 
 ```
-dotnet run --project src/BoardGames.App        from the repository root
-
-cd src/BoardGames.App                          or from the project folder
+cd src/BoardGames.App
 dotnet run
 ```
 
@@ -67,9 +65,11 @@ Game rules: Gomoku five or more in a row wins (Heavy stones count, six or more a
 
 Passing arguments plays a comma-separated script without prompts (moves and PASS only, Human vs Human). It prints the final board, then the active player, the stone or disk counts and the result (winner, draw or in progress). It stops at the first invalid command (control commands such as `undo` or `save` in a script count as invalid) and exits with 0 (whole script ran), 1 (invalid command) or 2 (bad arguments).
 
+Run these from `src/BoardGames.App`:
+
 ```
-dotnet run --project src/BoardGames.App -- --game reversi --variant corner "P3:4,P3:3,P3:2,P2:2,P1:2,P1:1"
-dotnet run --project src/BoardGames.App -- --game gomoku --variant standard "O5:5,O1:1,O5:6,O1:2,O5:7,O1:3,O5:8,O1:4,O5:9"
+dotnet run -- --game reversi --variant corner "P3:4,P3:3,P3:2,P2:2,P1:2,P1:1"
+dotnet run -- --game gomoku --variant standard "O5:5,O1:1,O5:6,O1:2,O5:7,O1:3,O5:8,O1:4,O5:9"
 ```
 
 `--game` is `gomoku` or `reversi`. `--variant` is one of:
@@ -115,7 +115,7 @@ Core also has `ScriptedGameIO.FromCsv("O1:1,O2:2")` for running a script; its `O
 
 ### Manual system test checklist
 
-Run `dotnet run --project src/BoardGames.App` and check each item for all six variants unless stated.
+Run `dotnet run` from `src/BoardGames.App` and check each item for all six variants unless stated.
 
 1. **Start and navigate**: the menu offers New game, Load game and Quit; invalid menu entries show a message and re-prompt; "Back" options return to the previous menu.
 2. **Modes**: Human vs Human; Human vs Computer with Dumb level; Human vs Computer with Smarter level. The computer's moves are printed and always legal.
