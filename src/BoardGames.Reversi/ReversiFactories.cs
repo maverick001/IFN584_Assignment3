@@ -8,8 +8,7 @@ public abstract class ReversiFactoryBase : GameFactoryBase
     public override Board CreateBoard() => new(8, 8);
     protected abstract ReversiObjective Objective { get; }
     public override IComputerStrategy CreateComputerStrategy(AiLevel level) =>
-        level == AiLevel.Smarter ? new SmarterReversiStrategy(Objective) : base.CreateComputerStrategy(level);
-    // Task 4 can extend the text and replace the inherited Dumb placeholder.
+        level == AiLevel.Smarter ? new SmarterReversiStrategy(Objective) : new DumbReversiStrategy();
     public override IHelpProvider CreateHelp() => new BasicHelpProvider(
         "Place a disk on an empty cell to flank one or more opposing disks between your disks " +
         "in any of eight straight directions. All flanked disks flip. PASS is allowed only if " +

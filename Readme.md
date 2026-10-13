@@ -7,7 +7,7 @@ A .NET 10 console framework for two-player board games. Both game families are n
 
 Each game can be played Human vs Human or Human vs Computer (Dumb or Smarter AI), saved to and loaded from a JSON file, and driven by a script in CLI test mode.
 
-Still open: **Task 4** replaces the Dumb AI placeholder (it currently always plays the first legal move) with a random legal-move strategy, polishes the CLI, adds the six spec example scripts as tests and runs the manual system test (see [Task 4 hand-over](#task-4-hand-over-whats-left-and-how-to-test)).
+Still open: **Task 4** polishes the CLI, adds the six spec example scripts as tests and runs the manual system test (see [Task 4 hand-over](#task-4-hand-over-whats-left-and-how-to-test)).
 
 Further documentation: `Task1_Briefing.docx` (the design: patterns, interfaces, game loop, undo), [Task 3 implementation handover](temp/task3/Task3_Handover.md), [Reversi object diagram](temp/task3/diagrams/reversi-object.svg) and [save/load sequence diagram](temp/task3/diagrams/save-load-sequence.svg).
 
@@ -84,7 +84,7 @@ GomokuFog in CLI test mode prints the board from the active player's view, even 
 ## Test
 
 ```
-dotnet test                                    run all tests (230 at the time of writing)
+dotnet test                                    run all tests (250 at the time of writing)
 dotnet test --filter "FullyQualifiedName~Reversi"      only tests whose name contains Reversi
 dotnet test --filter "FullyQualifiedName~Cli"          only the CLI tests
 ```
@@ -108,11 +108,10 @@ Core also has `ScriptedGameIO.FromCsv("O1:1,O2:2")` for running a script; its `O
 
 ### Still to code
 
-- **Dumb AI**: write `RandomLegalMoveStrategy : IComputerStrategy` (pick uniformly from the `legal` list it is given; when the list is empty the loop issues the PASS) and use it in the Gomoku and Reversi factories in place of the inherited `FirstLegalMoveStrategy` placeholder (see the `CreateComputerStrategy` override in `GomokuFactories.cs` and `ReversiFactories.cs`). Smarter AI is already done for both families.
 - **CLI polish** in `src/BoardGames.App/CliRunner.cs`, and the six spec example scripts as tests in the CLI section of `AppTests.cs` (or `Integration/CliIntegrationTests.cs`).
 - Do not edit `src/BoardGames.Core`. If you need a change there, ask the Task 1 owner and say why.
 
-Already done, so nothing to write: the `help` text for all six variants (Gomoku in `GomokuFactories.cs`, Reversi in `ReversiFactories.cs`, with the variant's win rule) and the Smarter AI. Just read each variant's `help` output during the system test (checklist item 10) and report wrong or unclear wording to the owner of that family.
+Already done, so nothing to write: the `help` text for all six variants (Gomoku in `GomokuFactories.cs`, Reversi in `ReversiFactories.cs`, with the variant's win rule), the Dumb AI (`DumbGomokuStrategy` and `DumbReversiStrategy`, a random pick from the legal moves; the loop issues the Reversi PASS when there is none) and the Smarter AI. Just read each variant's `help` output during the system test (checklist item 10) and report wrong or unclear wording to the owner of that family.
 
 ### Manual system test checklist
 
@@ -141,13 +140,13 @@ src/BoardGames.Core        Task 1. Frozen: do not edit.
   Game.cs         Game (the template method), GameSetup, GameOutcome and the other small game types
   GameIO.cs       IGameIO, ConsoleGameIO, ScriptedGameIO
   Input.cs        PlaceInput / PassInput / ControlInput, IInputParser, StandardInputParser
-  Strategies.cs   IWinStrategy, IComputerStrategy, GameResult, FirstLegalMoveStrategy (the Dumb AI placeholder)
+  Strategies.cs   IWinStrategy, IComputerStrategy, GameResult, FirstLegalMoveStrategy (Core's default, unused by the two games)
   Factories.cs    IGameFactory, GameFactoryBase, GameCatalog (Composite tree)
   Views.cs        IBoardView, ConsoleBoardView, IHelpProvider, BasicHelpProvider
   Persistence.cs  GameSaveData, IGameRepository
 
-src/BoardGames.Gomoku      Task 2. GomokuGame, EraserCommand, FiveInARowWin, FogView, SmarterGomokuStrategy, 3 factories.
-src/BoardGames.Reversi     Task 3. ReversiGame, ReversiPlaceCommand, ReversiRules, win strategies, SmarterReversiStrategy, 3 factories.
+src/BoardGames.Gomoku      Task 2. GomokuGame, EraserCommand, FiveInARowWin, FogView, DumbGomokuStrategy, SmarterGomokuStrategy, 3 factories.
+src/BoardGames.Reversi     Task 3. ReversiGame, ReversiPlaceCommand, ReversiRules, win strategies, DumbReversiStrategy, SmarterReversiStrategy, 3 factories.
 src/BoardGames.Persistence Task 3. JsonGameRepository: replay-based loading with snapshot verification.
 src/BoardGames.App         Program, MainMenu, CatalogSetup (the list of games), CliRunner (Task 4 extends).
 tests/BoardGames.Tests     xUnit tests (see the Test section).
