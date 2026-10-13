@@ -7,7 +7,7 @@ A .NET 10 console framework for two-player board games. Both game families are n
 
 Each game can be played Human vs Human or Human vs Computer (Dumb or Smarter AI), saved to and loaded from a JSON file, and driven by a script in CLI test mode.
 
-Still open: **Task 4** replaces the Dumb AI placeholder (it currently always plays the first legal move) with a random legal-move strategy, polishes the help texts and CLI, adds the six spec example scripts as tests and runs the manual system test (see [Task 4 hand-over](#task-4-hand-over-whats-left-and-how-to-test)).
+Still open: **Task 4** replaces the Dumb AI placeholder (it currently always plays the first legal move) with a random legal-move strategy, polishes the CLI, adds the six spec example scripts as tests and runs the manual system test (see [Task 4 hand-over](#task-4-hand-over-whats-left-and-how-to-test)).
 
 Further documentation: `Task1_Briefing.docx` (the design: patterns, interfaces, game loop, undo), [Task 3 implementation handover](temp/task3/Task3_Handover.md), [Reversi object diagram](temp/task3/diagrams/reversi-object.svg) and [save/load sequence diagram](temp/task3/diagrams/save-load-sequence.svg).
 
@@ -109,9 +109,10 @@ Core also has `ScriptedGameIO.FromCsv("O1:1,O2:2")` for running a script; its `O
 ### Still to code
 
 - **Dumb AI**: write `RandomLegalMoveStrategy : IComputerStrategy` (pick uniformly from the `legal` list it is given; when the list is empty the loop issues the PASS) and use it in the Gomoku and Reversi factories in place of the inherited `FirstLegalMoveStrategy` placeholder (see the `CreateComputerStrategy` override in `GomokuFactories.cs` and `ReversiFactories.cs`). Smarter AI is already done for both families.
-- **Help texts**: extend the per-variant rules text if needed (`CreateHelp` in the factories).
 - **CLI polish** in `src/BoardGames.App/CliRunner.cs`, and the six spec example scripts as tests in the CLI section of `AppTests.cs` (or `Integration/CliIntegrationTests.cs`).
 - Do not edit `src/BoardGames.Core`. If you need a change there, ask the Task 1 owner and say why.
+
+Already done, so nothing to write: the `help` text for all six variants (Gomoku in `GomokuFactories.cs`, Reversi in `ReversiFactories.cs`, with the variant's win rule) and the Smarter AI. Just read each variant's `help` output during the system test (checklist item 10) and report wrong or unclear wording to the owner of that family.
 
 ### Manual system test checklist
 
