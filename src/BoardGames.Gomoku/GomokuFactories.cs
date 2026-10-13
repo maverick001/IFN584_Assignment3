@@ -4,12 +4,11 @@ namespace BoardGames.Gomoku;
 
 public abstract class GomokuFactoryBase : GameFactoryBase
 {
-    // Task 3 integration only; Task 2 owns game rules, inventory and views.
     public override IComputerStrategy CreateComputerStrategy(AiLevel level) =>
         level == AiLevel.Smarter ? new SmarterGomokuStrategy() : new DumbGomokuStrategy();
     public override Board CreateBoard() => new(10, 10);
     public override IWinStrategy CreateWinStrategy() => new FiveInARowWin();
-    public override IHelpProvider CreateHelp() => new BasicHelpProvider("PLACEHOLDER: place stones; the real five-in-a-row rules come with Task 2.");
+    public override IHelpProvider CreateHelp() => new BasicHelpProvider("Players take turns placing stones. To win a player must line up 5 of their own stones vertically, horizontally or diagonally.");
     protected override Game Assemble(GameParts parts, GameSetup setup) => new GomokuGame(parts, setup);
 }
 
@@ -43,7 +42,7 @@ public sealed class GomokuPlusFactory : GomokuFactoryBase
     {
         return new BasicHelpProvider(
             "Players take turns placing Ordinary or Heavy stones on Empty cells, " +
-            "or erasing opponets stone. " +
+            "or erasing an opponent's Ordinary stone. " +
             "Heavy stones cannot be erased. " + 
             "Each player starts with 2 Heavy stones and 2 Eraser stones. " +
             "Ordinary stones are unlimited. " +

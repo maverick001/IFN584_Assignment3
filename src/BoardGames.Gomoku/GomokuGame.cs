@@ -72,7 +72,7 @@ public sealed class GomokuPlus : Game
         Board board = State.Board;
         if(!board.InBounds(place.At))
         {
-            return ValidationResult.Fail($"{place.At} is off the board: rows and colums go from 1 to {board.Rows}.");
+            return ValidationResult.Fail($"{place.At} is off the board: rows and columns go from 1 to {board.Rows}.");
         }
         
         if(place.Code == "E")
@@ -87,11 +87,11 @@ public sealed class GomokuPlus : Game
             }
             else if(target.Kind == PieceKind.Heavy)
             {
-                return ValidationResult.Fail($"{place.At} contains a heavy stone and cannot erased.");
+                return ValidationResult.Fail($"{place.At} contains a heavy stone and cannot be erased.");
             }
             else if(target.Owner.Index == State.Current.Index)
             {
-                return ValidationResult.Fail($"{place.At} Is your own stone and cannot be erased.");
+                return ValidationResult.Fail($"{place.At} is your own stone and cannot be erased.");
             }
         }
         else if(place.Code == "H" && State.Current.Left(PieceKind.Heavy) <= 0)

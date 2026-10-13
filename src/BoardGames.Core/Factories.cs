@@ -38,7 +38,7 @@ public abstract class GameFactoryBase : IGameFactory
     // FACTORY METHOD with a default: the special stones each player starts with. GomokuPlus overrides it (Heavy 2, Eraser 2).
     protected virtual Dictionary<PieceKind, int> CreateInventory(int playerIndex) => new();
 
-    // The computer's brain. The default is a placeholder; Dumb and Smarter AI replace it.
+    // The computer's brain. The default plays the first legal move; each family overrides it with its Dumb and Smarter AI.
     public virtual IComputerStrategy CreateComputerStrategy(AiLevel level) => new FirstLegalMoveStrategy();
 
     // The default is the plain console board. GomokuFog overrides it with the fog view.

@@ -2,9 +2,7 @@ using System.Text;
 
 namespace BoardGames.Core;
 
-// Draws the game (Observer pattern: the view observes the game). Attach subscribes to Game.TurnChanged,
-// which the game raises once after every move, undo, redo and load, so one undo (two commands) redraws once.
-// A fog view picks what to show from game.State.Current.
+// Draws the game (Observer pattern: the view observes the game).
 public interface IBoardView
 {
     void Attach(Game game);
@@ -13,7 +11,6 @@ public interface IBoardView
     void Render();
 
     // true (default): redraw on every TurnChanged. false: only draw when Render() is called.
-    // CLI test mode turns it off and calls Render() once, for the final board.
     bool AutoRedraw { get; set; }
 }
 
@@ -23,9 +20,7 @@ public interface IHelpProvider
     string GetHelp(Game game);
 }
 
-// The plain console board. Reuse it for any variant that shows the true board;
-// a fog variant writes its own IBoardView that hides cells.
-// Pass a TextWriter to draw somewhere other than the console (tests do).
+// The plain console board. Reuse it for any variant that shows the true board; a fog variant writes its own IBoardView that hides cells.
 public sealed class ConsoleBoardView : IBoardView
 {
     private readonly TextWriter? _output;
@@ -65,8 +60,7 @@ public sealed class ConsoleBoardView : IBoardView
     }
 }
 
-// A ready-made help text: family, variant and board size, the variant's rules (the text you pass in),
-// the special stones left, and the commands that make sense for this family. Reuse it and just write the rules.
+// A ready-made help text: family, variant and board size, the variant's rules (the text you pass in), the special stones left, and the commands that make sense for this family. Reuse it and just write the rules.
 public sealed class BasicHelpProvider : IHelpProvider
 {
     private readonly string _rules;
