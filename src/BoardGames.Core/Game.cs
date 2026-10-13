@@ -1,9 +1,6 @@
 namespace BoardGames.Core;
 
-// The shared game loop. Play() is a TEMPLATE METHOD: the order of the steps is fixed here and cannot be
-// overridden. A game variant only fills in the steps below that differ (the "hooks"):
-// Validate, CreateCommand, GetLegalMoves  (required)   and   IsTerminal, OnMoveApplied  (optional).
-// To add a game: derive from Game, override those, write one IMoveCommand per kind of move, and a factory.
+// The shared game loop. 
 public abstract class Game
 {
     private GameResult _result = GameResult.InProgress;

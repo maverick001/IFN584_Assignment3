@@ -4,8 +4,7 @@ using BoardGames.Reversi;
 
 namespace BoardGames.App;
 
-// The one place that lists every game. To add a game or variant, add one Register line;
-// the menu, the CLI and the loop need no change.
+// The one place that lists every game. To add a game or variant, add one Register line.
 public static class CatalogSetup
 {
     public static GameCatalog Build()

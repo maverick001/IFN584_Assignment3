@@ -4,10 +4,6 @@ using BoardGames.Gomoku;
 namespace BoardGames.App;
 
 // CLI test mode (Task 4, D, extends this):
-// dotnet run -- --game reversi --variant corner "P3:4,P3:3,P4:3"
-// Plays the script without prompts (moves and PASS only), prints the final board and the status:
-// active player, stone or disk counts, and the result (winner, draw or in progress).
-// Starter version: it works end to end, D adds whatever else the grading scripts need.
 public static class CliRunner
 {
     // Returns 0 if the whole script ran, 1 if a command was invalid, 2 if the arguments were wrong.

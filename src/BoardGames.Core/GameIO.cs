@@ -1,7 +1,6 @@
 namespace BoardGames.Core;
 
 // How the game talks to the outside: the console for a person, a list of commands for a script or a test.
-// The same game loop serves interactive play, CLI test mode and unit tests.
 public interface IGameIO
 {
     // Shows the prompt (if interactive) and returns the next line, or null when input has ended.

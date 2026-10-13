@@ -2,8 +2,7 @@ using BoardGames.Core;
 
 namespace BoardGames.App;
 
-// New game / Load game / Quit. It never mentions "family" or "variant": the catalog tree does the choosing
-// (catalog.Root.Choose), so new games appear in the menu by themselves.
+// New game / Load game / Quit. 
 public sealed class MainMenu
 {
     private readonly GameCatalog _catalog;
