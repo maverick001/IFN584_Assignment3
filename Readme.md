@@ -7,9 +7,7 @@ A .NET 10 console framework for two-player board games. Both game families are n
 
 Each game can be played Human vs Human or Human vs Computer (Dumb or Smarter AI), saved to and loaded from a JSON file, and driven by a script in CLI test mode.
 
-Still open: **Task 4** adds the six spec example scripts as automated tests and runs the manual system test (see [Task 4 hand-over](#task-4-hand-over-whats-left-and-how-to-test)).
-
-Further documentation: `Task1_Briefing.docx` (the design: patterns, interfaces, game loop, undo), [Task 3 implementation handover](temp/task3/Task3_Handover.md), [Reversi object diagram](temp/task3/diagrams/reversi-object.svg) and [save/load sequence diagram](temp/task3/diagrams/save-load-sequence.svg).
+Still open: **Task 4** adds automated CLI tests for the three Gomoku spec example scripts and runs the manual system test (see [Task 4 hand-over](#task-4-hand-over-whats-left-and-how-to-test)).
 
 ## Install and build
 
@@ -106,9 +104,16 @@ Core also has `ScriptedGameIO.FromCsv("O1:1,O2:2")` for running a script; its `O
 
 ## Task 4 hand-over: what's left and how to test
 
-### Still to code
+### Still to code (test code only)
 
-- **The six spec example scripts as automated tests** (spec section 4.5), in `Integration/CliIntegrationTests.cs` or the CLI section of `AppTests.cs`. All six already run correctly from the command line and print the final board, active player, counts and result, so `CliRunner.cs` needs no change unless the system test finds a defect. Standard and Anti Reversi already have a test; the three Gomoku scripts and Corner Reversi do not.
+No production code is expected. The only coding is in `tests/`:
+
+- **Add tests for the three Gomoku spec example scripts** (spec section 4.5), in `Integration/CliIntegrationTests.cs`. Use `RunCli` as the existing tests do, with these scripts:
+  - standard: `O5:3,O6:3,O5:4,O6:4,O5:5,O6:5,O5:6,O6:6,O5:7` (Player 1 wins with five in a row)
+  - plus: `O3:2,O3:3,O3:1,O4:3,O3:4,O5:3,E3:3,H3:3` (an Eraser removes an Ordinary stone, then a Heavy stone goes on that cell)
+  - fog: `O5:5,O2:2,O5:6,O2:3,O6:5,O8:8` (the printed board is fogged from the active player's view)
+- **Tighten the three existing Reversi script tests** (`The_Reversi_example_scripts_run_to_the_end_on_every_variant`). They only check exit code 0 and eight board rows. Also assert the active player, the disk counts and the result line.
+- All six scripts already run correctly from the command line, so `CliRunner.cs` needs no change unless the system test finds a defect.
 - Do not edit `src/BoardGames.Core`. If you need a change there, ask the Task 1 owner and say why.
 
 Already done, so nothing to write: the `help` text for all six variants (Gomoku in `GomokuFactories.cs`, Reversi in `ReversiFactories.cs`, with the variant's win rule), the Dumb AI (`DumbGomokuStrategy` and `DumbReversiStrategy`, a random pick from the legal moves; the loop issues the Reversi PASS when there is none) and the Smarter AI. Just read each variant's `help` output during the system test (checklist item 10) and report wrong or unclear wording to the owner of that family.
@@ -148,9 +153,8 @@ src/BoardGames.Core        Task 1. Frozen: do not edit.
 src/BoardGames.Gomoku      Task 2. GomokuGame, EraserCommand, FiveInARowWin, FogView, DumbGomokuStrategy, SmarterGomokuStrategy, 3 factories.
 src/BoardGames.Reversi     Task 3. ReversiGame, ReversiPlaceCommand, ReversiRules, win strategies, DumbReversiStrategy, SmarterReversiStrategy, 3 factories.
 src/BoardGames.Persistence Task 3. JsonGameRepository: replay-based loading with snapshot verification.
-src/BoardGames.App         Program, MainMenu, CatalogSetup (the list of games), CliRunner (Task 4 extends).
+src/BoardGames.App         Program, MainMenu, CatalogSetup (the list of games), CliRunner (CLI test mode).
 tests/BoardGames.Tests     xUnit tests (see the Test section).
-temp/task3                 Task 3 handover, report and diagram sources.
 ```
 
 The App project references Core, Gomoku, Reversi and Persistence; the game projects never reference the App.
