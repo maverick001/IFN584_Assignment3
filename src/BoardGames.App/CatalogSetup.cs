@@ -11,12 +11,10 @@ public static class CatalogSetup
     {
         var catalog = new GameCatalog();
 
-        // Task 2 (C): replace these placeholders with the real Gomoku factories.
         catalog.Register(new StandardGomokuFactory());
         catalog.Register(new GomokuPlusFactory());
         catalog.Register(new GomokuFogFactory());
 
-        // Task 3 (B): replace these placeholders with the real Reversi factories.
         catalog.Register(new StandardReversiFactory());
         catalog.Register(new AntiReversiFactory());
         catalog.Register(new CornerReversiFactory());

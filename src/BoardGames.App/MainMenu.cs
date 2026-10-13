@@ -2,7 +2,7 @@ using BoardGames.Core;
 
 namespace BoardGames.App;
 
-// New game / Load game / Quit. 
+// New game / Load game / Quit.
 public sealed class MainMenu
 {
     private readonly GameCatalog _catalog;

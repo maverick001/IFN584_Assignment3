@@ -3,7 +3,7 @@ using BoardGames.Gomoku;
 
 namespace BoardGames.App;
 
-// CLI test mode (Task 4, D, extends this):
+// CLI test mode: plays a comma-separated script of moves and PASS without prompts, then prints the final board and the status.
 public static class CliRunner
 {
     // Returns 0 if the whole script ran, 1 if a command was invalid, 2 if the arguments were wrong.

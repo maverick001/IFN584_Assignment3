@@ -12,7 +12,7 @@ public sealed record GameResult(GameResultKind Kind, Player? Winner, string Reas
     public bool IsOver => Kind != GameResultKind.InProgress;
 }
 
-// Decides who has won (Strategy pattern). 
+// Decides who has won (Strategy pattern).
 public interface IWinStrategy
 {
     GameResult Evaluate(GameState state, bool isTerminal);
@@ -24,13 +24,13 @@ public interface IComputerStrategy
     PlaceInput Choose(GameState state, Player me, IReadOnlyList<PlaceInput> legal);
 }
 
-// Placeholder AI: always plays the first legal move. D replaces it with the random Dumb AI.
+// Default AI of GameFactoryBase: always plays the first legal move. The Gomoku and Reversi factories use their own Dumb and Smarter strategies.
 public sealed class FirstLegalMoveStrategy : IComputerStrategy
 {
     public PlaceInput Choose(GameState state, Player me, IReadOnlyList<PlaceInput> legal) => legal[0];
 }
 
-// Placeholder win rule: nobody wins, the game is a draw once it cannot continue. Real variants replace it.
+// Default win rule: nobody wins, the game is a draw once it cannot continue. Real variants replace it.
 public sealed class DrawOnTerminalStrategy : IWinStrategy
 {
     public GameResult Evaluate(GameState state, bool isTerminal) =>

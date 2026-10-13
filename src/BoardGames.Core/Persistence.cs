@@ -1,6 +1,6 @@
 namespace BoardGames.Core;
 
-// What a save file holds: the setup plus the list of moves. 
+// What a save file holds: the setup plus the list of moves.
 public sealed record GameSaveData(
     int Version,
     string FamilyKey, string VariantKey,           // the two keys GameCatalog.Resolve needs
@@ -9,7 +9,7 @@ public sealed record GameSaveData(
     Dictionary<int, Dictionary<PieceKind, int>> Inventories,
     List<MoveRecord> Moves);
 
-// Writes and reads save files (JSON). 
+// Writes and reads save files (JSON).
 public interface IGameRepository
 {
     void Save(Game game, string path);

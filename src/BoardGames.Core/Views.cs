@@ -2,7 +2,7 @@ using System.Text;
 
 namespace BoardGames.Core;
 
-// Draws the game (Observer pattern: the view observes the game). 
+// Draws the game (Observer pattern: the view observes the game).
 public interface IBoardView
 {
     void Attach(Game game);

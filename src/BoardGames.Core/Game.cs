@@ -1,6 +1,6 @@
 namespace BoardGames.Core;
 
-// The shared game loop. 
+// The shared game loop.
 public abstract class Game
 {
     private GameResult _result = GameResult.InProgress;
