@@ -69,6 +69,73 @@ public class CliIntegrationTests
         Assert.Contains("Game over.", text);
     }
 
+    // ------------------------------------------------------------ the Gomoku example scripts from the spec
+
+    [Fact]
+    public void The_standard_Gomoku_example_script_is_won_by_Player_1_on_row_5()
+    {
+        (int exit, string text) = RunCli("--game", "gomoku", "--variant", "standard",
+            "O5:3,O6:3,O5:4,O6:4,O5:5,O6:5,O5:6,O6:6,O5:7");
+
+        Assert.Equal(0, exit);
+
+        // Player 1 fills 5:3 to 5:7 while Player 2 answers along row 6 and never reaches five.
+        string[] grid = ParseGrid(text);
+        Assert.Equal(10, grid.Length);
+        Assert.Equal("..XXXXX...", grid[4]);
+        Assert.Equal("..OOOO....", grid[5]);
+
+        Assert.Contains("Active player: Player 2 (O)   Counts: X=5  O=4", text);
+        Assert.Contains("Result: Player 1 (X) wins: five stones in a row.", text);
+        Assert.Contains("Game over.", text);
+    }
+
+    [Fact]
+    public void The_GomokuPlus_example_script_erases_a_stone_and_puts_a_heavy_one_on_the_same_cell()
+    {
+        (int exit, string text) = RunCli("--game", "gomoku", "--variant", "plus",
+            "O3:2,O3:3,O3:1,O4:3,O3:4,O5:3,E3:3,H3:3");
+
+        Assert.Equal(0, exit);
+
+        // E3:3 removes Player 2's Ordinary stone, then H3:3 puts Player 2's Heavy stone on that same cell.
+        // A Heavy stone is drawn in lower case, so 'o' at 3:3 shows both halves of the script worked.
+        string[] grid = ParseGrid(text);
+        Assert.Equal("XXoX......", grid[2]);
+        Assert.Equal("..O.......", grid[3]);
+        Assert.Equal("..O.......", grid[4]);
+
+        // The erased stone and the new Heavy one cancel out, so both players still hold three stones.
+        Assert.Contains("Active player: Player 1 (X)   Counts: X=3  O=3", text);
+        Assert.Contains("Result: in progress.", text);
+        Assert.Contains("Game in progress.", text);
+    }
+
+    [Fact]
+    public void The_GomokuFog_example_script_prints_only_what_the_active_player_can_see()
+    {
+        (int exit, string text) = RunCli("--game", "gomoku", "--variant", "fog",
+            "O5:5,O2:2,O5:6,O2:3,O6:5,O8:8");
+
+        Assert.Equal(0, exit);
+
+        // Player 1 is active and holds 5:5, 5:6 and 6:5, so it sees those cells and their eight neighbours.
+        string[] grid = ParseGrid(text);
+        Assert.Equal(10, grid.Length);
+        Assert.Equal("???....???", grid[3]);
+        Assert.Equal("???.XX.???", grid[4]);
+        Assert.Equal("???.X..???", grid[5]);
+        Assert.Equal("???...????", grid[6]);
+
+        // Player 2 played 2:2, 2:3 and 8:8, none of them next to a Player 1 stone, so none of them is drawn.
+        Assert.Equal("??????????", grid[1]);
+        Assert.Equal("??????????", grid[7]);
+        Assert.DoesNotContain('O', string.Concat(grid));
+
+        Assert.Contains("Active player: Player 1 (X)   Counts: X=3  O=3", text);
+        Assert.Contains("Game in progress.", text);
+    }
+
     [Fact]
     public void A_script_cannot_use_undo_save_or_help()
     {
@@ -106,16 +173,26 @@ public class CliIntegrationTests
     }
 
     [Theory]
-    [InlineData("standard", "P3:4,P3:3,P4:3,P5:3,P4:2")]
-    [InlineData("anti", "P4:3,P3:3,P3:4,P5:3,P6:3")]
-    [InlineData("corner", "P3:4,P3:3,P3:2,P2:2,P1:2,P1:1")]
-    public void The_Reversi_example_scripts_run_to_the_end_on_every_variant(string variant, string script)
+    [InlineData("standard", "P3:4,P3:3,P4:3,P5:3,P4:2", "Player 2 (O)", "X=5  O=4")]
+    [InlineData("anti", "P4:3,P3:3,P3:4,P5:3,P6:3", "Player 2 (O)", "X=5  O=4")]
+    [InlineData("corner", "P3:4,P3:3,P3:2,P2:2,P1:2,P1:1", "Player 1 (X)", "X=5  O=5")]
+    public void The_Reversi_example_scripts_run_to_the_end_on_every_variant(
+        string variant, string script, string activePlayer, string counts)
     {
         (int exit, string text) = RunCli("--game", "reversi", "--variant", variant, script);
 
         Assert.Equal(0, exit);
-        Assert.Equal(8, ParseReversiRows(text).Length);
         Assert.DoesNotContain("Stopped at command", text);
+
+        // A placement adds one disk and only ever flips the ones already there, so the board holds
+        // the four opening disks plus one for each move in the script.
+        string[] rows = ParseReversiRows(text);
+        Assert.Equal(8, rows.Length);
+        Assert.Equal(4 + script.Split(',').Length, string.Concat(rows).Count(symbol => symbol != '.'));
+
+        Assert.Contains($"Active player: {activePlayer}   Counts: {counts}", text);
+        Assert.Contains("Result: in progress.", text);
+        Assert.Contains("Game in progress.", text);
     }
 
     [Fact]
