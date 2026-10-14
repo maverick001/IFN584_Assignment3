@@ -69,8 +69,6 @@ public class CliIntegrationTests
         Assert.Contains("Game over.", text);
     }
 
-    // ------------------------------------------------------------ the Gomoku example scripts from the spec
-
     [Fact]
     public void The_standard_Gomoku_example_script_is_won_by_Player_1_on_row_5()
     {
@@ -78,13 +76,10 @@ public class CliIntegrationTests
             "O5:3,O6:3,O5:4,O6:4,O5:5,O6:5,O5:6,O6:6,O5:7");
 
         Assert.Equal(0, exit);
-
-        // Player 1 fills 5:3 to 5:7 while Player 2 answers along row 6 and never reaches five.
         string[] grid = ParseGrid(text);
         Assert.Equal(10, grid.Length);
-        Assert.Equal("..XXXXX...", grid[4]);
-        Assert.Equal("..OOOO....", grid[5]);
-
+        Assert.Equal("..XXXXX...", grid[4]);   // P1 fills 5:3 to 5:7
+        Assert.Equal("..OOOO....", grid[5]);   // P2 answers on row 6 and never gets five
         Assert.Contains("Active player: Player 2 (O)   Counts: X=5  O=4", text);
         Assert.Contains("Result: Player 1 (X) wins: five stones in a row.", text);
         Assert.Contains("Game over.", text);
@@ -97,15 +92,11 @@ public class CliIntegrationTests
             "O3:2,O3:3,O3:1,O4:3,O3:4,O5:3,E3:3,H3:3");
 
         Assert.Equal(0, exit);
-
-        // E3:3 removes Player 2's Ordinary stone, then H3:3 puts Player 2's Heavy stone on that same cell.
-        // A Heavy stone is drawn in lower case, so 'o' at 3:3 shows both halves of the script worked.
         string[] grid = ParseGrid(text);
-        Assert.Equal("XXoX......", grid[2]);
+        Assert.Equal("XXoX......", grid[2]);   // E3:3 erased P2's stone, H3:3 put P2's heavy one there
         Assert.Equal("..O.......", grid[3]);
         Assert.Equal("..O.......", grid[4]);
-
-        // The erased stone and the new Heavy one cancel out, so both players still hold three stones.
+        // one stone erased and one added, so both players still have three
         Assert.Contains("Active player: Player 1 (X)   Counts: X=3  O=3", text);
         Assert.Contains("Result: in progress.", text);
         Assert.Contains("Game in progress.", text);
@@ -118,20 +109,17 @@ public class CliIntegrationTests
             "O5:5,O2:2,O5:6,O2:3,O6:5,O8:8");
 
         Assert.Equal(0, exit);
-
-        // Player 1 is active and holds 5:5, 5:6 and 6:5, so it sees those cells and their eight neighbours.
         string[] grid = ParseGrid(text);
         Assert.Equal(10, grid.Length);
+        // P1 holds 5:5, 5:6 and 6:5, so it sees those cells and the ones next to them
         Assert.Equal("???....???", grid[3]);
         Assert.Equal("???.XX.???", grid[4]);
         Assert.Equal("???.X..???", grid[5]);
         Assert.Equal("???...????", grid[6]);
-
-        // Player 2 played 2:2, 2:3 and 8:8, none of them next to a Player 1 stone, so none of them is drawn.
+        // P2's stones at 2:2, 2:3 and 8:8 are not next to a P1 stone, so they stay hidden
         Assert.Equal("??????????", grid[1]);
         Assert.Equal("??????????", grid[7]);
         Assert.DoesNotContain('O', string.Concat(grid));
-
         Assert.Contains("Active player: Player 1 (X)   Counts: X=3  O=3", text);
         Assert.Contains("Game in progress.", text);
     }
@@ -184,8 +172,7 @@ public class CliIntegrationTests
         Assert.Equal(0, exit);
         Assert.DoesNotContain("Stopped at command", text);
 
-        // A placement adds one disk and only ever flips the ones already there, so the board holds
-        // the four opening disks plus one for each move in the script.
+        // four opening disks plus one per move: a placement adds a disk, flips never change the total
         string[] rows = ParseReversiRows(text);
         Assert.Equal(8, rows.Length);
         Assert.Equal(4 + script.Split(',').Length, string.Concat(rows).Count(symbol => symbol != '.'));
